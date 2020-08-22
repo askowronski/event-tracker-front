@@ -33,6 +33,10 @@ const useStyles = makeStyles((theme) => ({
     fullList: {
         width: 'auto',
     },
+    link: {
+        textDecoration: 'none'
+    }
+
 }));
 
 export  const Header = () => {
@@ -58,12 +62,11 @@ export  const Header = () => {
             onClick={toggleDrawer(false)}
             onKeyDown={toggleDrawer(false)}
         >
-            <Divider />
             <List>
-                <Link to="/EventCalendar">
-                    <ListItem button key={'Yo'}>
+                <Link to="/EventCalendar" className={classes.link}>
+                    <ListItem button key={'eventCalendar'}>
                         <ListItemIcon><InboxIcon /></ListItemIcon>
-                        <ListItemText primary={'Yo'} />
+                        <ListItemText primary={'Event Calendar'} />
                     </ListItem>
                 </Link>
             </List>
