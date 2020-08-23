@@ -6,6 +6,14 @@ const localizer = momentLocalizer(moment);
 
 const myEventsList= [];
 
+const eventColorLegend = {
+    'injury': 'red',
+    'run': 'green',
+    'rock-ring': 'blue',
+    'handstand': 'yellow',
+    'Test' : 'orange',
+    'test': 'orange',
+}
 
 export class EventCalendar extends React.Component {
     constructor(props){
@@ -17,15 +25,18 @@ export class EventCalendar extends React.Component {
         }
     }
 
+    componentDidMount() {
+        this.fetchEvents();
+    }
+
     fetchEvents() {
-        fetch('http://192.168.1.18:8080/events/calendarData')
+        fetch('http://localhost:8083/events/calendarData/web')
         .then(res => res.json())
         .then(
             result => {
                 this.setState({
                     isLoaded: true,
                     events: result,
-                    eventTypes: result.eventTypeList
                 });
             },
             // Note: it's important to handle errors here
@@ -40,15 +51,32 @@ export class EventCalendar extends React.Component {
         );
     }
 
+    ColoredDateCellWrapper = ({ children, event }) => {
+        let backgroundColor = 'lightblue';
+        let type = event.title;
+
+        let newColor = eventColorLegend[type];
+
+        console.log(newColor);
+        return React.cloneElement(React.Children.only(children), {
+            style: {
+                backgroundColor: newColor,
+            },
+        })
+    }
+
     render() {
         return(
             <div style={{width: '100%', height: '100%'}}>
                 <Calendar
                     localizer={localizer}
-                    events={myEventsList}
+                    events={this.state.events}
                     startAccessor="start"
                     endAccessor="end"
                     style={{ height: 800, width:'100%' }}
+                    components={{
+                        eventWrapper: this.ColoredDateCellWrapper,
+                    }}
                 />
             </div>
         )
