@@ -6,6 +6,15 @@ const localizer = momentLocalizer(moment);
 
 const myEventsList= [];
 
+const eventColorLegend = {
+    'injury': 'red',
+    'run': 'green',
+    'rock-ring': 'blue',
+    'handstand': 'yellow',
+    'Test' : 'orange',
+    'test': 'orange',
+    'yoga' : 'lightblue'
+}
 
 export class EventCalendar extends React.Component {
     constructor(props){
@@ -13,20 +22,26 @@ export class EventCalendar extends React.Component {
         this.state = {
             isLoaded: false,
             events: [],
+            eventsConverted: [],
             eventTypes: [],
         }
     }
 
+    componentDidMount() {
+        this.fetchEvents();
+    }
+
     fetchEvents() {
-        fetch('http://192.168.1.18:8080/events/calendarData')
+        fetch('http://localhost:8083/events/calendarData/web')
         .then(res => res.json())
         .then(
             result => {
+                this.convertEventsToJavascriptDates(result);
                 this.setState({
                     isLoaded: true,
-                    events: result,
-                    eventTypes: result.eventTypeList
-                });
+                    eventsConverted: result
+                })
+
             },
             // Note: it's important to handle errors here
             // instead of a catch() block so that we don't swallow
@@ -40,15 +55,28 @@ export class EventCalendar extends React.Component {
         );
     }
 
+    convertEventsToJavascriptDates(events) {
+        events.forEach(event => {
+            event.start = new Date(event.start);
+            event.end = new Date(event.end);
+        });
+    }
+
+
     render() {
         return(
             <div style={{width: '100%', height: '100%'}}>
                 <Calendar
                     localizer={localizer}
-                    events={myEventsList}
+                    events={this.state.eventsConverted}
                     startAccessor="start"
                     endAccessor="end"
                     style={{ height: 800, width:'100%' }}
+                    eventPropGetter={event => ({
+                        style : {
+                            backgroundColor: eventColorLegend[event.title]
+                        }
+                    })}
                 />
             </div>
         )

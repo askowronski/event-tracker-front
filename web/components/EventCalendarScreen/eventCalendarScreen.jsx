@@ -1,7 +1,5 @@
 import React  from 'react';
 import { connect } from "react-redux";
-import { ThanosCaptionConatiner } from '../../../platform/thanosCaption/thanosCaptionConatinerComponent';
-import HitButtonContainer from "../../../platform/thanosHitButton/hitButtonContainerComponent";
 import "./mainComponent.css"
 import {EventCalendarContainerConatiner} from "../../../platform/eventCalendar/eventCalendarContainerComponent";
 import "react-big-calendar/lib/css/react-big-calendar.css"
