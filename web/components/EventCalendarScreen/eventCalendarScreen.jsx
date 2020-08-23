@@ -5,8 +5,9 @@ import HitButtonContainer from "../../../platform/thanosHitButton/hitButtonConta
 import "./mainComponent.css"
 import {EventCalendarContainerConatiner} from "../../../platform/eventCalendar/eventCalendarContainerComponent";
 import "react-big-calendar/lib/css/react-big-calendar.css"
+import TemporaryDrawer from "../HeaderDrawer/HeaderDrawer";
 
-class MainComponent extends React.Component {
+class EventCalendarScreen extends React.Component {
     constructor(props){
         super(props);
     }
@@ -25,4 +26,4 @@ const mapStateToProps = function(state){
         count: state.hitButtonReducer.count
 }};
 
-export default connect(mapStateToProps,{})(MainComponent);
+export default connect(mapStateToProps,{})(EventCalendarScreen);
