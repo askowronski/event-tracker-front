@@ -14,6 +14,7 @@ import ListItemText from "@material-ui/core/ListItemText";
 import Divider from "@material-ui/core/Divider";
 import Drawer from "@material-ui/core/Drawer";
 import InboxIcon from '@material-ui/icons/MoveToInbox';
+import ScheduleIcon from '@material-ui/icons/Schedule';
 import {Link} from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
@@ -34,7 +35,12 @@ const useStyles = makeStyles((theme) => ({
         width: 'auto',
     },
     link: {
-        textDecoration: 'none'
+        textDecoration: 'none',
+        fontWeight: 'bold',
+        color: '#1d697c'
+    },
+    appBar: {
+        backgroundColor: '#1d697c'
     }
 
 }));
@@ -65,7 +71,7 @@ export  const Header = () => {
             <List>
                 <Link to="/EventCalendar" className={classes.link}>
                     <ListItem button key={'eventCalendar'}>
-                        <ListItemIcon><InboxIcon /></ListItemIcon>
+                        <ListItemIcon><ScheduleIcon /></ListItemIcon>
                         <ListItemText primary={'Event Calendar'} />
                     </ListItem>
                 </Link>
@@ -75,7 +81,7 @@ export  const Header = () => {
 
     return (
         <div className={classes.root}>
-            <AppBar position="static" >
+            <AppBar position="static" className={classes.appBar}>
                 <Toolbar>
                     <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu"  onClick={toggleDrawer(true)}>
                         <MenuIcon/>
