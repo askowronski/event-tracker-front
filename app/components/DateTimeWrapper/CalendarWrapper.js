@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { View, Text, Button, StyleSheet } from 'react-native';
 import { Calendar } from 'react-native-calendars';
-import EventCalendar from '../EventCalendar/EventCalendar';
+import EventCalendarRN from '../EventCalendar/EventCalendarRN';
 
 export default function CalendarWrapper(props) {
   return (

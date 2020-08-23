@@ -13,7 +13,7 @@ const colors = [
   'b'
 ];
 
-export default class EventCalendar extends React.Component {
+export default class EventCalendarRN extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -36,7 +36,7 @@ export default class EventCalendar extends React.Component {
   }
 
   fetchEvents() {
-    fetch('http://192.168.1.18:8080/events/calendarData')
+    fetch('http://192.168.1.18:8083/events/calendarData/rn')
       .then(res => res.json())
       .then(
         result => {
