@@ -13,6 +13,7 @@ const eventColorLegend = {
     'handstand': 'yellow',
     'Test' : 'orange',
     'test': 'orange',
+    'yoga' : 'lightblue'
 }
 
 export class EventCalendar extends React.Component {
@@ -21,6 +22,7 @@ export class EventCalendar extends React.Component {
         this.state = {
             isLoaded: false,
             events: [],
+            eventsConverted: [],
             eventTypes: [],
         }
     }
@@ -34,10 +36,12 @@ export class EventCalendar extends React.Component {
         .then(res => res.json())
         .then(
             result => {
+                this.convertEventsToJavascriptDates(result);
                 this.setState({
                     isLoaded: true,
-                    events: result,
-                });
+                    eventsConverted: result
+                })
+
             },
             // Note: it's important to handle errors here
             // instead of a catch() block so that we don't swallow
@@ -51,32 +55,28 @@ export class EventCalendar extends React.Component {
         );
     }
 
-    ColoredDateCellWrapper = ({ children, event }) => {
-        let backgroundColor = 'lightblue';
-        let type = event.title;
-
-        let newColor = eventColorLegend[type];
-
-        console.log(newColor);
-        return React.cloneElement(React.Children.only(children), {
-            style: {
-                backgroundColor: newColor,
-            },
-        })
+    convertEventsToJavascriptDates(events) {
+        events.forEach(event => {
+            event.start = new Date(event.start);
+            event.end = new Date(event.end);
+        });
     }
+
 
     render() {
         return(
             <div style={{width: '100%', height: '100%'}}>
                 <Calendar
                     localizer={localizer}
-                    events={this.state.events}
+                    events={this.state.eventsConverted}
                     startAccessor="start"
                     endAccessor="end"
                     style={{ height: 800, width:'100%' }}
-                    components={{
-                        eventWrapper: this.ColoredDateCellWrapper,
-                    }}
+                    eventPropGetter={event => ({
+                        style : {
+                            backgroundColor: eventColorLegend[event.title]
+                        }
+                    })}
                 />
             </div>
         )
