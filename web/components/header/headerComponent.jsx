@@ -64,10 +64,16 @@ export  const Header = () => {
             onKeyDown={toggleDrawer(false)}
         >
             <List>
-                <Link to="/EventCalendarRN" className={classes.link}>
+                <Link to="/EventCalendar" className={classes.link}>
                     <ListItem button key={'eventCalendar'}>
                         <ListItemIcon><ScheduleIcon /></ListItemIcon>
                         <ListItemText primary={'Event Calendar'} />
+                    </ListItem>
+                </Link>
+                <Link to="/EventTable" className={classes.link}>
+                    <ListItem button key={'eventTable'}>
+                        <ListItemIcon><ScheduleIcon /></ListItemIcon>
+                        <ListItemText primary={'Event Table'} />
                     </ListItem>
                 </Link>
             </List>

@@ -10,6 +10,7 @@ import {
 } from "react-router-dom";
 import EventCalendarScreen
     from "./components/EventCalendarScreen/eventCalendarScreen";
+import {EventTableScreen} from "./components/EventTableScreen/eventTableScreen";
 
 class App extends Component {
     constructor(props) {
@@ -24,7 +25,7 @@ class App extends Component {
                 {/* A <Switch> looks through its children <Route>s and
             renders the first one that matches the current URL. */}
                 <Switch>
-                    <Route path="/EventCalendarRN">
+                    <Route path="/EventCalendar">
                         <EventCalendarScreen/>
                     </Route>
                     <Route path="/users">
@@ -32,6 +33,9 @@ class App extends Component {
                     </Route>
                     <Route path="/">
                         <Home/>
+                    </Route>
+                    <Route path="/EventTable">
+                        <EventTableScreen />
                     </Route>
                 </Switch>
             </Router>
