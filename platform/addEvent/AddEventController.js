@@ -34,71 +34,8 @@ export class AddEventController extends React.Component {
             startTime: new Date(),
             endTime: new Date(),
         };
-        this.handleChangeUser = this.handleChangeUser.bind(this);
-        this.changeDate = this.changeDate.bind(this);
-        this.changeDuration = this.changeDuration.bind(this);
-        this.changeNotes = this.changeNotes.bind(this);
-        this.changeType = this.changeType.bind(this);
-        this.createEvent = this.createEvent.bind(this);
-        this.clearInputs = this.clearInputs.bind(this);
-        this.setMultiPeriod = this.setMultiPeriod.bind(this);
     }
 
-    setMultiPeriod = (value) => {
-        this.setState({ multiPeriod: value });
-    };
-
-    setIsOnGoing = value => {
-        this.setState({ isOnGoing: value });
-    };
-
-    handleChangeTitle = (text) => {
-        this.setState({ eventName: text });
-    };
-
-    handleChangeUser = (text) => {
-        this.setState({ userName: text });
-    };
-
-    changeDate = (date) => {
-        var dateString = date.dateString;
-        var year = dateString.split('-')[0];
-        var month = dateString.split('-')[1];
-        var day = dateString.split('-')[2];
-
-        var newDateString = month + '-' + day + '-' + year;
-
-        this.setState({
-            selected: dateString,
-            selectedFormatted: newDateString
-        });
-    };
-
-    changeEndDate = (date) => {
-        var dateString = date.dateString;
-        var year = dateString.split('-')[0];
-        var month = dateString.split('-')[1];
-        var day = dateString.split('-')[2];
-
-        var newDateString = month + '-' + day + '-' + year;
-
-        this.setState({
-            selectedEndTime: dateString,
-            selectedEndTimeFormatted: newDateString
-        });
-    };
-
-    changeDuration = (duration) => {
-        this.setState({ duration: duration });
-    };
-
-    changeNotes = (notes) => {
-        this.setState({ notes: notes });
-    };
-
-    changeType = (type) => {
-        this.setState({ type: type });
-    };
 
 
     createEvent = (clearInputsRef) => {
@@ -157,25 +94,6 @@ export class AddEventController extends React.Component {
             startTime: new Date(),
             endTime: new Date(),
         });
-        console.log("clearin dem inputs.");
-    };
-
-    changeStartTime = (hours, minutes) => {
-        this.setState({
-            startTime: {
-                selectedHours: hours,
-                selectedMinutes: minutes
-            }
-        });
-    };
-
-    changeEndTime = (hours, minutes) => {
-        this.setState({
-            endTime: {
-                selectedHours: hours,
-                selectedMinutes: minutes
-            }
-        });
     };
 
     handleChange = (stateName, value) => {
@@ -185,16 +103,7 @@ export class AddEventController extends React.Component {
     };
     render() {
         return (
-           <AddEvent changeStartTime={this.changeStartTime} changeEndTime={this.changeEndTime}
-           changeStartDate={this.changeDate} changeEndDate={this.changeEndDate}
-           clearInputs={this.clearInputs}
-           createEvent={this.createEvent}
-           changeType={this.changeType}
-           changeNotes={this.changeNotes}
-           changeDuration={this.changeDuration}
-           changeUsername={this.handleChangeUser}
-           changeIsOnGoing={this.setIsOnGoing}
-           changeMultiPeriod={this.setMultiPeriod}
+           <AddEvent
            changeTitle={this.handleChangeTitle}
            handleChange={this.handleChange}
            startTime={this.state.startTime}
