@@ -45,10 +45,10 @@ export class AddEventController extends React.Component {
             type: this.state.type,
             startTime: this.state.startTime,
             duration: this.state.duration,
-            notes: this.state.notes
+            notes: this.state.notes,
         };
 
-        if (this.state.multiPeriod && !this.state.isOnGoing) {
+        if (!this.state.isOnGoing) {
             body.endTime = this.state.endTime;
         }
 
@@ -108,7 +108,9 @@ export class AddEventController extends React.Component {
            handleChange={this.handleChange}
            startTime={this.state.startTime}
            endTime={this.state.endTime}
-           clearInputs={this.clearInputs}/>
+           clearInputs={this.clearInputs}
+           createEvent={this.createEvent}
+           />
         )
     }
 }
