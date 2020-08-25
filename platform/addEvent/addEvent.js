@@ -9,7 +9,6 @@ import DateTimePicker from "react-datetime-picker";
 import InputLabel from "@material-ui/core/InputLabel";
 import Button from "@material-ui/core/Button";
 
-
 const myEventsList = [];
 
 const eventColorLegend = {
@@ -29,50 +28,45 @@ export class AddEvent extends React.Component {
 
     render() {
         return (
-            <div style={{width: '100%', height: '100%'}}>
-                <FormControl halfWidth>
+            <div style={{width: '40%', height: '100%', marginLeft: '30%'}}>
+                <FormControl fullWidth>
                     <TextField id="input-title" label="Outlined" type="text"
                                label="Title"
-                               onChange={(e) => this.props.handleChange("eventName", e.target.value)}             />
+                               onChange={(e) => this.props.handleChange(
+                                   "eventName", e.target.value)}/>
                     <TextField id="input-username" label="Outlined" type="text"
                                label="Username"
-                               onChange={(e) => this.props.handleChange("userName", e.target.value)}          />
+                               onChange={(e) => this.props.handleChange(
+                                   "userName", e.target.value)}/>
                     <TextField id="input-type" label="Outlined" type="select"
                                label="Type"
-                               onChange={(e) => this.props.handleChange("type", e.target.value)}  />
+                               onChange={(e) => this.props.handleChange("type",
+                                   e.target.value)}/>
                     <TextField id="input-duration" label="Outlined"
                                type="number" label="Duration (s)"
-                               onChange={(e) => this.props.handleChange("duration", e.target.value)}  />
+                               onChange={(e) => this.props.handleChange(
+                                   "duration", e.target.value)}/>
                     <TextField id="input-duration" label="Outlined"
                                type="text" label="Notes"
                                multiline={true}
                                rows={10}
-                               onChange={(e) => this.props.handleChange("notes", e.target.value)}  />
-                               <div className="checkboxContainer">
-                                   <FormControlLabel
-                                       control={
-                                           <Checkbox
-                                               onChange={(e) => this.props.handleChange("multiPeriod", e.target.checked)}
-                                               name="multiPeriod"
-                                               color="primary"
-                                           />
-                                       }
-                                       label="MultiDay?"
-                                   />
-                                   <FormControlLabel
-                                       control={
-                                           <Checkbox
-                                               onChange={(e) => this.props.handleChange("isOnGoing", e.target.checked)}
-                                               name="isOnGoing"
-                                               color="primary"
-                                           />
-                                       }
-                                       label="Is On Going?"
-                                       style={{width: '50%'}}
-                                   />
-                               </div>
+                               onChange={(e) => this.props.handleChange("notes",
+                                   e.target.value)}/>
+                    <FormControlLabel
+                        control={
+                            <Checkbox
+                                onChange={(e) => this.props.handleChange(
+                                    "isOnGoing", e.target.checked)}
+                                name="isOnGoing"
+                                color="primary"
+                            />
+                        }
+                        label="Is On Going?"
+                        style={{width: '50%', color: 'grey'}}
+                    />
                     <DateTimePicker
-                        onChange={(e) => this.props.handleChange("startTime", e)}
+                        onChange={(e) => this.props.handleChange("startTime",
+                            e)}
                         value={this.props.startTime}
                         className="dateTimeWrapper"
                     />
@@ -82,7 +76,9 @@ export class AddEvent extends React.Component {
                         className="dateTimeWrapper"
                     />
 
-                    <Button onClick={ () => this.props.createEvent(this.props.clearInputs)}>Create Event</Button>
+                    <Button onClick={() => this.props.createEvent(
+                        this.props.clearInputs)}
+                    style={{backgroundColor: "#1d697c", color: 'white'}}>Create Event</Button>
 
                 </FormControl>
 
