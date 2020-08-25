@@ -9,3 +9,7 @@ body {
     font-size: 3rem;
     font-weight: 900;
 }
+
+.MuiToolbar-root {
+    margin-bottom: 10px;
+}

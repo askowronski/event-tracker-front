@@ -8,8 +8,8 @@ import {
     Route,
     Link
 } from "react-router-dom";
-import EventCalendarScreen
-    from "./components/EventCalendarScreen/eventCalendarScreen";
+import {EventCalendarScreen} from "./components/EventCalendarScreen/eventCalendarScreen";
+import {AddEventScreen} from "./components/AddEventScreen/AddEventScreen";
 
 class App extends Component {
     constructor(props) {
@@ -26,6 +26,9 @@ class App extends Component {
                 <Switch>
                     <Route path="/EventCalendar">
                         <EventCalendarScreen/>
+                    </Route>
+                    <Route path="/AddEvent">
+                        <AddEventScreen/>
                     </Route>
                     <Route path="/users">
                         <Users/>
