@@ -14,6 +14,7 @@ import Divider from "@material-ui/core/Divider";
 import Drawer from "@material-ui/core/Drawer";
 import ScheduleIcon from '@material-ui/icons/Schedule';
 import {Link} from "react-router-dom";
+import AddIcon from '@material-ui/icons/Add';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -68,6 +69,12 @@ export  const Header = () => {
                     <ListItem button key={'eventCalendar'}>
                         <ListItemIcon><ScheduleIcon /></ListItemIcon>
                         <ListItemText primary={'Event Calendar'} />
+                    </ListItem>
+                </Link>
+                <Link to="/AddEvent" className={classes.link}>
+                    <ListItem button key={'addEvent'}>
+                        <ListItemIcon><AddIcon /></ListItemIcon>
+                        <ListItemText primary={'Add Event'} />
                     </ListItem>
                 </Link>
                 <Link to="/EventTable" className={classes.link}>

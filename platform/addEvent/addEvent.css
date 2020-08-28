@@ -1,0 +1,17 @@
+/*.MuiFormControl-root {*/
+/*  width: 50%;*/
+/*}*/
+
+.happyHelperText {
+  margin-bottom: 10px !important;
+}
+
+.checkboxContainer {
+  display: flex;
+  flex-direction: row;
+  width: 50%;
+}
+
+.react-datetime-picker__inputGroup > input, select{
+  color: grey
+}
