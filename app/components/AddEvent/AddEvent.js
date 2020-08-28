@@ -1,12 +1,12 @@
 import * as React from 'react';
 import { View, Text, Button, StyleSheet, ScrollView } from 'react-native';
-import AddEventForm from "../AddEventForm/AddEventForm";
+import {AddEventContainerComponent} from "../../../platform/addEvent/addEventContainerComponent";
 
 export default function AddEvent({navigation}) {
     return (
         <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', width: '100%' }}>
             <ScrollView>
-                <AddEventForm />
+                <AddEventContainerComponent />
             </ScrollView>
         </View>
     );

@@ -8,7 +8,7 @@ export default function DateTimeWrapper(props) {
     <View>
       <Text style={styles.inputLabel}>{props.labelText}</Text>
       <CalendarWrapper
-        onDayPress={date => props.changeDate(date)}
+        onDayPress={date => props.changeDate(date.dateString)}
         markedDates={{
           [props.selected]: {
             selected: true,

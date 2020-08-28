@@ -1,6 +1,5 @@
 import React from 'react';
-import "./addEvent.css"
-import {AddEvent} from "./addEvent";
+import AddEvent from "./addEvent";
 
 
 
@@ -22,15 +21,10 @@ export class AddEventController extends React.Component {
         this.state = {
             eventName: '',
             userName: '',
-            selected: '',
-            selectedEndTime: '',
-            selectedFormatted: '',
-            selectedEndTimeFormatted: '',
             isOnGoing: false,
             duration: '',
             notes: '',
             type: '',
-            multiPeriod: false,
             startTime: new Date(),
             endTime: new Date(),
         };
@@ -72,8 +66,11 @@ export class AddEventController extends React.Component {
             // successToast.show('Event Added.');
             clearInputsRef();
             console.log('ok');
+            alert("ok");
+
         })
         .catch(function(error) {
+            alert(error);
             console.log(error);
         });
     };
@@ -82,15 +79,10 @@ export class AddEventController extends React.Component {
         this.setState( {
             eventName: '',
             userName: '',
-            selected: '',
-            selectedEndTime: '',
-            selectedFormatted: '',
-            selectedEndTimeFormatted: '',
             isOnGoing: false,
             duration: '',
             notes: '',
             type: '',
-            multiPeriod: false,
             startTime: new Date(),
             endTime: new Date(),
         });
@@ -104,12 +96,16 @@ export class AddEventController extends React.Component {
     render() {
         return (
            <AddEvent
-           changeTitle={this.handleChangeTitle}
            handleChange={this.handleChange}
            startTime={this.state.startTime}
            endTime={this.state.endTime}
            clearInputs={this.clearInputs}
            createEvent={this.createEvent}
+           isOnGoing={this.state.isOnGoing}
+           eventName={this.state.eventName}
+           type={this.state.type}
+           userName={this.state.userName}
+           notes={this.state.notes}
            />
         )
     }
