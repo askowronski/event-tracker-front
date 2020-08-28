@@ -13,3 +13,15 @@
 .eventTable {
   border: 10px #1d697c;
 }
+
+.editEventModalContainer {
+  background-color: white;
+  width: 800px;
+  align-items: center;
+  display: inline-block;
+}
+
+.closeModalButton {
+  margin-left: 30% !important;
+  width: 40%;
+}

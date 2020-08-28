@@ -12,6 +12,8 @@ import FormControl from '@material-ui/core/FormControl';
 import TablePagination from '@material-ui/core/TablePagination';
 import TableFooter from '@material-ui/core/TableFooter';
 import './eventTable.css';
+import Modal from '@material-ui/core/Modal';
+import { AddEventContainerComponent } from '../addEvent/addEventContainerComponent';
 
 function createData(name, calories, fat, carbs, protein) {
   return { name, calories, fat, carbs, protein };
@@ -34,8 +36,13 @@ export class EventTable extends React.Component {
       eventsConverted: [],
       eventTypes: [],
       page: 0,
-      rowsPerPage: 10
+      rowsPerPage: 10,
+      modalOpen: false,
+      editEvent: {
+        eventName: ''
+      }
     };
+    this.closeModal = this.closeModal.bind(this);
   }
 
   componentDidMount() {
@@ -97,14 +104,35 @@ export class EventTable extends React.Component {
       });
   };
 
+  closeModal = () => {
+    console.log('closing modal');
+    this.setState({
+      modalOpen: false
+    });
+    this.fetchEvents();
+  };
+
+  openModal(event) {
+    this.setState({
+      modalOpen: true,
+      editEvent: event
+    });
+  }
+
   renderActions(event) {
     return (
       <div>
         <Button
+          onClick={() => this.openModal(event)}
+          style={{ backgroundColor: '#1d697c', color: 'white' }}
+        >
+          Edit
+        </Button>
+        <Button
           onClick={() => this.deleteEvent(event.id, this.fetchEvents)}
           style={{ backgroundColor: '#1d697c', color: 'white' }}
         >
-          Delete{' '}
+          Delete
         </Button>
       </div>
     );
@@ -185,6 +213,37 @@ export class EventTable extends React.Component {
           onChangePage={this.handleChangePage}
           onChangeRowsPerPage={this.handleChangeRowsPerPage}
         />
+        <Modal
+          style={{
+            alignItems: 'center',
+            justifyContent: 'center',
+            display: 'flex'
+          }}
+          open={this.state.modalOpen}
+          onClose={this.closeModal}
+          aria-labelledby="simple-modal-title"
+          aria-describedby="simple-modal-description"
+        >
+          <div className="editEventModalContainer">
+            <AddEventContainerComponent
+              isEdit={true}
+              eventName={this.state.editEvent.name}
+              userName={this.state.editEvent.userName}
+              isOnGoing={this.state.editEvent.onGoing}
+              editEvent={this.state.editEvent}
+              editId={this.state.editEvent.id}
+              closeModal={this.closeModal}
+              modalOpen={this.state.modalOpen}
+            />
+            <Button
+              onClick={() => this.closeModal()}
+              style={{ backgroundColor: '#1d697c', color: 'white' }}
+              className="closeModalButton"
+            >
+              Close Modal
+            </Button>
+          </div>
+        </Modal>
       </div>
     );
   }

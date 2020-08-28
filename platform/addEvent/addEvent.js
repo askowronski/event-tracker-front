@@ -24,6 +24,24 @@ export class AddEvent extends React.Component {
     super(props);
   }
 
+  renderButton() {
+    return this.props.isEdit ? (
+      <Button
+        onClick={() => this.props.editEvent(this.props.closeModal)}
+        style={{ backgroundColor: '#1d697c', color: 'white' }}
+      >
+        Edit Event
+      </Button>
+    ) : (
+      <Button
+        onClick={() => this.props.createEvent(this.props.clearInputs)}
+        style={{ backgroundColor: '#1d697c', color: 'white' }}
+      >
+        Create Event
+      </Button>
+    );
+  }
+
   render() {
     return (
       <div style={{ width: '40%', height: '100%', marginLeft: '30%' }}>
@@ -36,14 +54,14 @@ export class AddEvent extends React.Component {
             value={this.props.eventName}
             onChange={e => this.props.handleChange('eventName', e.target.value)}
           />
-          <TextField
-            id="input-username"
-            label="Outlined"
-            type="text"
-            label="Username"
-            value={this.props.userName}
-            onChange={e => this.props.handleChange('userName', e.target.value)}
-          />
+          {/*<TextField*/}
+          {/*  id="input-username"*/}
+          {/*  label="Outlined"*/}
+          {/*  type="text"*/}
+          {/*  label="Username"*/}
+          {/*  value={this.props.userName}*/}
+          {/*  onChange={e => this.props.handleChange('userName', e.target.value)}*/}
+          {/*/>*/}
           <TextField
             id="input-type"
             label="Outlined"
@@ -86,12 +104,7 @@ export class AddEvent extends React.Component {
             className="dateTimeWrapper"
           />
 
-          <Button
-            onClick={() => this.props.createEvent(this.props.clearInputs)}
-            style={{ backgroundColor: '#1d697c', color: 'white' }}
-          >
-            Create Event
-          </Button>
+          {this.renderButton()}
         </FormControl>
       </div>
     );
