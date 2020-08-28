@@ -1,0 +1,15 @@
+.eventTableHeaderRow > th {
+  font-weight: bold;
+  color: #1d697c;
+}
+
+.tableNotesDiv {
+  max-width: 500px;
+  max-height: 200px;
+  overflow: auto;
+  width: 100%;
+}
+
+.eventTable {
+  border: 10px #1d697c;
+}
