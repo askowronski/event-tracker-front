@@ -1,17 +1,11 @@
-import React, { Component } from 'react';
-import { hot } from 'react-hot-loader/root';
-import { Header } from './components/header/headerComponent';
-import "./global.css";
-import {
-    BrowserRouter as Router,
-    Switch,
-    Route,
-    Link
-} from "react-router-dom";
-import {EventCalendarScreen} from "./components/EventCalendarScreen/eventCalendarScreen";
-import {AddEventScreen} from "./components/AddEventScreen/AddEventScreen";
-import {EventTableScreen} from "./components/EventTableScreen/eventTableScreen";
-
+import React, {Component} from 'react';
+import {hot} from 'react-hot-loader/root';
+import {Header} from './components/header/headerComponent';
+import './global.css';
+import {BrowserRouter as Router, Switch, Route, Link} from 'react-router-dom';
+import {EventCalendarScreen} from './components/EventCalendarScreen/eventCalendarScreen';
+import {AddEventScreen} from './components/AddEventScreen/AddEventScreen';
+import {EventTableScreen} from './components/EventTableScreen/eventTableScreen';
 
 class App extends Component {
     constructor(props) {
@@ -32,14 +26,11 @@ class App extends Component {
                     <Route path="/AddEvent">
                         <AddEventScreen/>
                     </Route>
-                    <Route path="/users">
-                        <Users/>
-                    </Route>
                     <Route path="/">
                         <Home/>
                     </Route>
                     <Route path="/EventTable">
-                        <EventTableScreen />
+                        <EventTableScreen/>
                     </Route>
                 </Switch>
             </Router>
@@ -58,4 +49,5 @@ function About() {
 function Users() {
     return <h2>Users</h2>;
 }
+
 export default hot(App);

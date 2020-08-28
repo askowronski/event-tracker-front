@@ -7,12 +7,11 @@ import {
     TextInput,
     CheckBox
 } from 'react-native';
-import Toast, { DURATION } from 'react-native-easy-toast';
+import Toast, {DURATION} from 'react-native-easy-toast';
 import DateTimeWrapper
-    from "../../app/components/DateTimeWrapper/DateTimeWrapper";
+    from '../../app/components/DateTimeWrapper/DateTimeWrapper';
 
-
-export default class AddEvent extends React.Component {
+export class AddEvent extends React.Component {
     constructor(props) {
         super(props);
         this.failToastRef = React.createRef();
@@ -28,9 +27,9 @@ export default class AddEvent extends React.Component {
             },
             startTimeDate: new Date(),
             endTimeDate: new Date(),
-            startTimeString: "",
-            endTimeString: ""
-        }
+            startTimeString: '',
+            endTimeString: ''
+        };
     }
 
     changeStartTime = (hours, minutes) => {
@@ -41,8 +40,12 @@ export default class AddEvent extends React.Component {
             }
         });
 
-
-        this.handleDateSquashAndUpdate(this.state.startTimeString, minutes, hours, "startTime");
+        this.handleDateSquashAndUpdate(
+            this.state.startTimeString,
+            minutes,
+            hours,
+            'startTime'
+        );
     };
 
     changeEndTime = (hours, minutes) => {
@@ -52,25 +55,38 @@ export default class AddEvent extends React.Component {
                 selectedMinutes: minutes
             }
         });
-        this.handleDateSquashAndUpdate(this.state.endTimeString, minutes, hours, "endTime");
+        this.handleDateSquashAndUpdate(
+            this.state.endTimeString,
+            minutes,
+            hours,
+            'endTime'
+        );
     };
 
-    changeStartDate = (dateString) => {
-        this.handleDateSquashAndUpdate(dateString, this.state.startTimeNumbers.selectedMinutes, this.state.startTimeNumbers.selectedHours, "startTime");
+    changeStartDate = dateString => {
+        this.handleDateSquashAndUpdate(
+            dateString,
+            this.state.startTimeNumbers.selectedMinutes,
+            this.state.startTimeNumbers.selectedHours,
+            'startTime'
+        );
 
         this.setState({
             startTimeString: dateString
-        })
-
+        });
     };
 
-    changeEndDate = (dateString) => {
-        this.handleDateSquashAndUpdate(dateString, this.state.endTimeNumbers.selectedMinutes, this.state.endTimeNumbers.selectedHours, "endTime");
+    changeEndDate = dateString => {
+        this.handleDateSquashAndUpdate(
+            dateString,
+            this.state.endTimeNumbers.selectedMinutes,
+            this.state.endTimeNumbers.selectedHours,
+            'endTime'
+        );
 
         this.setState({
             endTimeString: dateString
-        })
-
+        });
     };
 
     handleDateSquashAndUpdate(dateString, minutes, hours, timeType) {
@@ -79,7 +95,6 @@ export default class AddEvent extends React.Component {
         newDate.setMinutes(minutes);
         newDate.setHours(hours);
         this.props.handleChange(timeType, newDate);
-
     }
 
     formatDateString(dateString) {
@@ -91,11 +106,8 @@ export default class AddEvent extends React.Component {
         return newDateString;
     }
 
-
-
-
     renderEndTime() {
-        if (!this.props.isOnGoing)
+        if (!this.props.isOnGoing) {
             return (
                 <DateTimeWrapper
                     changeDate={this.changeEndDate}
@@ -105,55 +117,59 @@ export default class AddEvent extends React.Component {
                     labelText="End Date"
                 />
             );
+        }
         return null;
     }
-
 
     render() {
         return (
             <View style={styles.eventFormContainer}>
                 <Toast
                     ref={this.failToastRef}
-                    style={{ backgroundColor: 'red' }}
+                    style={{backgroundColor: 'red'}}
                     position="top"
                     positionValue={10}
                 />
                 <Toast
                     ref={this.successToastRef}
-                    style={{ backgroundColor: 'green' }}
+                    style={{backgroundColor: 'green'}}
                     position="top"
                     positionValue={10}
                 />
-                <View >
+                <View>
                     <Text style={styles.inputLabel}>Event Name</Text>
                     <TextInput
-                        onChangeText={text => this.props.handleChange("eventName", text)}
+                        onChangeText={text => this.props.handleChange(
+                            'eventName', text)}
                         style={styles.textInput}
                         value={this.props.eventName}
                     />
                 </View>
 
-                <View >
+                <View>
                     <Text style={styles.inputLabel}>Username</Text>
                     <TextInput
-                        onChangeText={text => this.props.handleChange("userName", text)}
+                        onChangeText={text => this.props.handleChange(
+                            'userName', text)}
                         style={styles.textInput}
                         value={this.props.userName}
                     />
                 </View>
-                <View >
+                <View>
                     <Text style={styles.inputLabel}>Type</Text>
                     <TextInput
-                        onChangeText={text => this.props.handleChange("type", text)}
+                        onChangeText={text => this.props.handleChange('type',
+                            text)}
                         style={styles.textInput}
                         value={this.props.type}
                     />
                 </View>
 
-                <View >
+                <View>
                     <Text style={styles.inputLabel}>Notes</Text>
                     <TextInput
-                        onChangeText={text => this.props.handleChange("notes", text)}
+                        onChangeText={text => this.props.handleChange('notes',
+                            text)}
                         style={styles.textInput}
                         value={this.props.notes}
                         multiline={true}
@@ -163,7 +179,8 @@ export default class AddEvent extends React.Component {
                 <Text style={styles.inputLabel}>Is On Going??</Text>
                 <CheckBox
                     value={this.props.isOnGoing}
-                    onValueChange={(value) => this.props.handleChange("isOnGoing", value)}
+                    onValueChange={value => this.props.handleChange('isOnGoing',
+                        value)}
                     style={styles.checkbox}
                 />
 
@@ -179,7 +196,7 @@ export default class AddEvent extends React.Component {
 
                 <Button
                     onPress={() => this.props.createEvent(
-                    this.props.clearInputs)}
+                        this.props.clearInputs)}
                     title="Add Event"
                 />
             </View>

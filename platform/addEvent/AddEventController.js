@@ -1,18 +1,16 @@
 import React from 'react';
-import AddEvent from "./addEvent";
-
-
+import {AddEvent} from './addEvent';
 
 const myEventsList = [];
 
 const eventColorLegend = {
-    'injury': 'red',
-    'run': 'green',
+    injury: 'red',
+    run: 'green',
     'rock-ring': 'blue',
-    'handstand': 'yellow',
-    'Test': 'orange',
-    'test': 'orange',
-    'yoga': 'lightblue'
+    handstand: 'yellow',
+    Test: 'orange',
+    test: 'orange',
+    yoga: 'lightblue'
 };
 
 export class AddEventController extends React.Component {
@@ -26,20 +24,17 @@ export class AddEventController extends React.Component {
             notes: '',
             type: '',
             startTime: new Date(),
-            endTime: new Date(),
+            endTime: new Date()
         };
     }
 
-
-
-    createEvent = (clearInputsRef) => {
-
+    createEvent = clearInputsRef => {
         let body = {
             name: this.state.eventName,
             type: this.state.type,
             startTime: this.state.startTime,
             duration: this.state.duration,
-            notes: this.state.notes,
+            notes: this.state.notes
         };
 
         if (!this.state.isOnGoing) {
@@ -66,8 +61,7 @@ export class AddEventController extends React.Component {
             // successToast.show('Event Added.');
             clearInputsRef();
             console.log('ok');
-            alert("ok");
-
+            alert('ok');
         })
         .catch(function(error) {
             alert(error);
@@ -76,7 +70,7 @@ export class AddEventController extends React.Component {
     };
 
     clearInputs = () => {
-        this.setState( {
+        this.setState({
             eventName: '',
             userName: '',
             isOnGoing: false,
@@ -84,29 +78,31 @@ export class AddEventController extends React.Component {
             notes: '',
             type: '',
             startTime: new Date(),
-            endTime: new Date(),
+            endTime: new Date()
         });
     };
 
     handleChange = (stateName, value) => {
-      this.setState({
-          ...this.state, [stateName]:value
-      })
+        this.setState({
+            ...this.state,
+            [stateName]: value
+        });
     };
+
     render() {
         return (
-           <AddEvent
-           handleChange={this.handleChange}
-           startTime={this.state.startTime}
-           endTime={this.state.endTime}
-           clearInputs={this.clearInputs}
-           createEvent={this.createEvent}
-           isOnGoing={this.state.isOnGoing}
-           eventName={this.state.eventName}
-           type={this.state.type}
-           userName={this.state.userName}
-           notes={this.state.notes}
-           />
-        )
+            <AddEvent
+                handleChange={this.handleChange}
+                startTime={this.state.startTime}
+                endTime={this.state.endTime}
+                clearInputs={this.clearInputs}
+                createEvent={this.createEvent}
+                isOnGoing={this.state.isOnGoing}
+                eventName={this.state.eventName}
+                type={this.state.type}
+                userName={this.state.userName}
+                notes={this.state.notes}
+            />
+        );
     }
 }
