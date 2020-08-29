@@ -1,84 +1,119 @@
-import { Calendar, momentLocalizer } from 'react-big-calendar'
-import moment from 'moment'
-import React  from 'react';
+import { Calendar, momentLocalizer } from 'react-big-calendar';
+import moment from 'moment';
+import React from 'react';
+import { EventTypesController } from '../eventTypes/eventTypesController';
 
 const localizer = momentLocalizer(moment);
 
-const myEventsList= [];
+const myEventsList = [];
 
 const eventColorLegend = {
-    'injury': 'red',
-    'run': 'green',
-    'rock-ring': 'blue',
-    'handstand': 'yellow',
-    'Test' : 'orange',
-    'test': 'orange',
-    'yoga' : 'lightblue'
-}
+  injury: '#b30000',
+  run: 'green',
+  'rock-ring': 'blue',
+  handstand: 'yellow',
+  Test: 'orange',
+  test: 'orange',
+  yoga: 'lightblue'
+};
 
 export class EventCalendar extends React.Component {
-    constructor(props){
-        super(props);
-        this.state = {
-            isLoaded: false,
-            events: [],
-            eventsConverted: [],
-            eventTypes: [],
+  constructor(props) {
+    super(props);
+    this.state = {
+      isLoaded: false,
+      events: [],
+      eventsConverted: [],
+      eventsConvertedCopy: [],
+      eventTypes: [],
+      eventTypeFilter: 'all'
+    };
+  }
+
+  componentDidMount() {
+    this.fetchEvents();
+  }
+
+  fetchEvents() {
+    fetch('http://localhost:8083/events/calendarData/web')
+      .then(res => res.json())
+      .then(
+        result => {
+          this.convertEventsToJavascriptDates(result);
+          this.setState({
+            isLoaded: true,
+            eventsConverted: result,
+            eventsConvertedCopy: result
+          });
+        },
+        // Note: it's important to handle errors here
+        // instead of a catch() block so that we don't swallow
+        // exceptions from actual bugs in components.
+        error => {
+          this.setState({
+            isLoaded: true,
+            error
+          });
         }
+      );
+  }
+
+  convertEventsToJavascriptDates(events) {
+    events.forEach(event => {
+      event.start = new Date(event.start);
+      event.end = new Date(event.end);
+    });
+  }
+
+  handleChangeFilter = e => {
+    this.setState({
+      eventTypeFilter: e.target.value
+    });
+    this.filterEvents(e.target.value);
+  };
+
+  filterEvents(filter) {
+    if (filter === 'all') {
+      this.setState({
+        eventsConverted: [...this.state.eventsConvertedCopy]
+      });
+    } else {
+      let filteredArray = [];
+
+      this.state.eventsConvertedCopy.map(e => {
+        if (e.title === filter) {
+          filteredArray.push(e);
+        }
+      });
+
+      this.setState({
+        eventsConverted: filteredArray
+      });
     }
+  }
 
-    componentDidMount() {
-        this.fetchEvents();
-    }
-
-    fetchEvents() {
-        fetch('http://localhost:8083/events/calendarData/web')
-        .then(res => res.json())
-        .then(
-            result => {
-                this.convertEventsToJavascriptDates(result);
-                this.setState({
-                    isLoaded: true,
-                    eventsConverted: result
-                })
-
-            },
-            // Note: it's important to handle errors here
-            // instead of a catch() block so that we don't swallow
-            // exceptions from actual bugs in components.
-            error => {
-                this.setState({
-                    isLoaded: true,
-                    error
-                });
+  render() {
+    return (
+      <div style={{ width: '100%', height: '100%' }}>
+        <div>
+          <EventTypesController
+            eventTypeFilter={this.state.eventTypeFilter}
+            handleChange={this.handleChangeFilter}
+          />
+        </div>
+        <Calendar
+          localizer={localizer}
+          events={this.state.eventsConverted}
+          startAccessor="start"
+          endAccessor="end"
+          style={{ height: 800, width: '100%' }}
+          eventPropGetter={event => ({
+            style: {
+              backgroundColor: eventColorLegend[event.title]
             }
-        );
-    }
-
-    convertEventsToJavascriptDates(events) {
-        events.forEach(event => {
-            event.start = new Date(event.start);
-            event.end = new Date(event.end);
-        });
-    }
-
-
-    render() {
-        return(
-            <div style={{width: '100%', height: '100%'}}>
-                <Calendar
-                    localizer={localizer}
-                    events={this.state.eventsConverted}
-                    startAccessor="start"
-                    endAccessor="end"
-                    style={{ height: 800, width:'100%' }}
-                    eventPropGetter={event => ({
-                        style : {
-                            backgroundColor: eventColorLegend[event.title]
-                        }
-                    })}
-                />
-            </div>
-        )
-    }
+          })}
+        />
+      </div>
+    );
+  }
 }

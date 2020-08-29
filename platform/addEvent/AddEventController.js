@@ -4,7 +4,7 @@ import { AddEvent } from './addEvent';
 const myEventsList = [];
 
 const eventColorLegend = {
-  injury: 'red',
+  injury: 'darkred',
   run: 'green',
   'rock-ring': 'blue',
   handstand: 'yellow',
