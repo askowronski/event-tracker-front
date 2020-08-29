@@ -13,7 +13,7 @@ const colors = [
   'b'
 ];
 
-export default class EventCalendar extends React.Component {
+export default class EventCalendarRN extends React.Component {
   constructor(props) {
     super(props);
     this.state = {

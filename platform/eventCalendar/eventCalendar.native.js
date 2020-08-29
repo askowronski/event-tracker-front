@@ -1,5 +1,7 @@
 import React  from 'react';
 import { View, Image, Text, StyleSheet } from 'react-native';
+import EventCalendarRN
+    from "../../app/components/EventCalendar/EventCalendarRN";
 
 const styles = StyleSheet.create({
     image: {
@@ -12,7 +14,7 @@ const styles = StyleSheet.create({
 export const EventCalendar = () => {
     return (
         <View style={styles.wrapper}>
-            <Text >Event Calendar</Text>
+            <EventCalendarRN />
         </View>
     )
 }

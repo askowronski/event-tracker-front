@@ -1,9 +1,6 @@
-import React  from 'react';
-import {AddEvent} from "./addEvent";
-import {AddEventController} from "./AddEventController";
+import React from 'react';
+import { AddEventController } from './AddEventController';
 
-export const AddEventContainerComponent = () => {
-    return(
-        <AddEventController />
-    )
-}
+export const AddEventContainerComponent = props => {
+  return <AddEventController {...props} />;
+};

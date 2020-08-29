@@ -1,14 +1,10 @@
 import * as React from 'react';
 import { View, StyleSheet } from 'react-native';
-import CalendarWrapper from '../DateTimeWrapper/CalendarWrapper';
-import EventCalendarWrapper from '../EventCalendarWrapper/EventCalendarWrapper';
-import EventCalendar from '../EventCalendar/EventCalendar';
 import {EventCalendarContainerConatiner} from "../../../platform/eventCalendar/eventCalendarContainerComponent";
 
 export default function CalendarScreen({ navigation }) {
   return (
     <View style={styles.container}>
-      <EventCalendar />
       <EventCalendarContainerConatiner />
     </View>
   );
