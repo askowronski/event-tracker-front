@@ -6,8 +6,9 @@ import TextField from '@material-ui/core/TextField';
 import Checkbox from '@material-ui/core/Checkbox';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import DateTimePicker from 'react-datetime-picker';
-import InputLabel from '@material-ui/core/InputLabel';
 import Button from '@material-ui/core/Button';
+import Slider from '@material-ui/core/Slider';
+import Typography from '@material-ui/core/Typography';
 
 const eventColorLegend = {
   injury: 'red',
@@ -79,6 +80,19 @@ export class AddEvent extends React.Component {
             multiline={true}
             rows={10}
             onChange={e => this.props.handleChange('notes', e.target.value)}
+          />
+          <Typography id="discrete-slider" gutterBottom>
+            Feel
+          </Typography>
+          <Slider
+            defaultValue={0}
+            aria-labelledby="discrete-slider"
+            valueLabelDisplay="auto"
+            onChange={(event, value) => this.props.handleChange('feel', value)}
+            step={0.1}
+            marks
+            min={-1}
+            max={1}
           />
           <FormControlLabel
             control={

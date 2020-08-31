@@ -176,6 +176,7 @@ export class EventTable extends React.Component {
               <TableRow className="eventTableHeaderRow">
                 <TableCell>Event Name</TableCell>
                 <TableCell align="right">Type</TableCell>
+                <TableCell align="right">Feel</TableCell>
                 <TableCell align="right">Start Date/Time</TableCell>
                 <TableCell align="right">End Date/Time</TableCell>
                 <TableCell>Notes</TableCell>
@@ -195,6 +196,7 @@ export class EventTable extends React.Component {
                       {event.name}
                     </TableCell>
                     <TableCell align="right">{event.type}</TableCell>
+                    <TableCell align="right">{event.feel}</TableCell>
                     <TableCell align="right">{event.startTime}</TableCell>
                     <TableCell align="right">{event.endTime}</TableCell>
                     <TableCell>{this.renderNotes(event.notes)}</TableCell>

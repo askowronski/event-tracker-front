@@ -9,6 +9,7 @@ import {
 } from 'react-native';
 import Toast, { DURATION } from 'react-native-easy-toast';
 import DateTimeWrapper from '../../app/components/DateTimeWrapper/DateTimeWrapper';
+import Slider from '@react-native-community/slider';
 
 export class AddEvent extends React.Component {
   constructor(props) {
@@ -105,6 +106,11 @@ export class AddEvent extends React.Component {
     return newDateString;
   }
 
+  changeSlider = value => {
+    let realFeel = (parseFloat(value) * 0.1).toFixed(1);
+    this.props.handleChange('feel', realFeel);
+  };
+
   renderEndTime() {
     if (!this.props.isOnGoing) {
       return (
@@ -169,6 +175,18 @@ export class AddEvent extends React.Component {
             style={styles.textInput}
             value={this.props.notes}
             multiline={true}
+          />
+        </View>
+
+        <View>
+          <Text style={styles.inputLabel}>Feel: {this.props.feel}</Text>
+          <Slider
+            onValueChange={value => this.changeSlider(value)}
+            style={styles.textInput}
+            value={this.props.feelRN}
+            step={1}
+            minimumValue={-10}
+            maximumValue={10}
           />
         </View>
 
