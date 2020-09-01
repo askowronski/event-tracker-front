@@ -26,7 +26,9 @@ export class AddEventController extends React.Component {
       startTime: new Date(),
       endTime: new Date(),
       isEdit: false,
-      editId: ''
+      editId: '',
+      feel: 0.2,
+      feelRN: 0
     };
   }
 
@@ -56,7 +58,8 @@ export class AddEventController extends React.Component {
       startTime: this.state.startTime,
       duration: this.state.duration,
       notes: this.state.notes,
-      id: this.state.id
+      id: this.state.id,
+      feel: this.state.feel
     };
 
     if (!this.state.isOnGoing) {
@@ -97,7 +100,8 @@ export class AddEventController extends React.Component {
       startTime: this.state.startTime,
       duration: this.state.duration,
       notes: this.state.notes,
-      id: this.state.editId
+      id: this.state.editId,
+      feel: this.state.feel
     };
 
     if (!this.state.isOnGoing) {
@@ -141,7 +145,9 @@ export class AddEventController extends React.Component {
       notes: '',
       type: '',
       startTime: new Date(),
-      endTime: new Date()
+      endTime: new Date(),
+      feel: 0.0,
+      feelRN: 0.0
     });
   };
 
@@ -168,6 +174,8 @@ export class AddEventController extends React.Component {
         userName={this.state.userName}
         notes={this.state.notes}
         isEdit={this.state.isEdit}
+        feel={this.state.feel}
+        feelRN={this.state.feelRN}
       />
     );
   }
