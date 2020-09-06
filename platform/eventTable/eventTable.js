@@ -195,7 +195,7 @@ export class EventTable extends React.Component {
                     <TableCell component="th" scope="row">
                       {event.name}
                     </TableCell>
-                    <TableCell align="right">{event.type}</TableCell>
+                    <TableCell align="right">{event.eventType.type}</TableCell>
                     <TableCell align="right">{event.feel}</TableCell>
                     <TableCell align="right">{event.startTime}</TableCell>
                     <TableCell align="right">{event.endTime}</TableCell>

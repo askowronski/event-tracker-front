@@ -8,13 +8,17 @@ const localizer = momentLocalizer(moment);
 const myEventsList = [];
 
 const eventColorLegend = {
-  injury: '#b30000',
+  injury: '#b32400',
   run: 'green',
-  'rock-ring': 'blue',
+  'rock-ring': 'brown',
   handstand: 'yellow',
   Test: 'orange',
   test: 'orange',
-  yoga: 'lightblue'
+  yoga: '#33ccff',
+  stretch: 'lightgreen',
+  'physical-therapy': 'lightpink',
+  'pt-exercises': '#336600'
+
 };
 
 export class EventCalendar extends React.Component {

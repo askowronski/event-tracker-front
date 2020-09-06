@@ -1,5 +1,6 @@
 import React from 'react';
 import { AddEvent } from './addEvent';
+import {FieldsInputContainerComponent} from "../fieldsInput/fieldsInputContainerComponent";
 
 const myEventsList = [];
 
@@ -28,7 +29,10 @@ export class AddEventController extends React.Component {
       isEdit: false,
       editId: '',
       feel: 0.2,
-      feelRN: 0
+      feelRN: 0,
+      newFieldName: '',
+      newFieldType: 'text',
+      fields: [],
     };
   }
 
@@ -36,6 +40,8 @@ export class AddEventController extends React.Component {
     const { isEdit } = this.props;
     if (isEdit) {
       const { notes, type, startTime, endTime } = this.props.editEvent;
+      const {eventType} = this.props.editEvent;
+      const {fields} = eventType;
       const { isEdit, editId, eventName, userName, isOnGoing } = this.props;
       this.setState({
         eventName,
@@ -46,7 +52,8 @@ export class AddEventController extends React.Component {
         endTime,
         isEdit,
         editId,
-        isOnGoing
+        isOnGoing,
+        fields
       });
     }
   }
@@ -59,7 +66,11 @@ export class AddEventController extends React.Component {
       duration: this.state.duration,
       notes: this.state.notes,
       id: this.state.id,
-      feel: this.state.feel
+      feel: this.state.feel,
+      eventType: {
+        type: this.state.type,
+        fields: this.state.fields
+      }
     };
 
     if (!this.state.isOnGoing) {
@@ -101,7 +112,11 @@ export class AddEventController extends React.Component {
       duration: this.state.duration,
       notes: this.state.notes,
       id: this.state.editId,
-      feel: this.state.feel
+      feel: this.state.feel,
+      eventType: {
+        type: this.state.type,
+        fields: this.state.fields
+      }
     };
 
     if (!this.state.isOnGoing) {
@@ -147,7 +162,10 @@ export class AddEventController extends React.Component {
       startTime: new Date(),
       endTime: new Date(),
       feel: 0.0,
-      feelRN: 0.0
+      feelRN: 0.0,
+      fields: [],
+      newFieldName: '',
+      newFieldType: 'text',
     });
   };
 
@@ -156,6 +174,61 @@ export class AddEventController extends React.Component {
       ...this.state,
       [stateName]: value
     });
+  };
+
+  handleChangeFields = (fieldName, fieldValue, fieldType) => {
+
+    let fields = this.state.fields.slice();
+    let existingField = false;
+    for (let i = 0; i < fields.length; i++) {
+      if(fields[i].name === fieldName) {
+        fields[i].value = fieldValue;
+        existingField = true;
+        break;
+      }
+    }
+    if (!existingField) {
+      let newField = {
+        name: fieldName,
+        value: fieldValue,
+        type: fieldType
+      };
+      fields.push(newField);
+    }
+
+    this.setState({
+      fields: fields
+    })
+  };
+
+  addField = () => {
+    if (this.state.newFieldName === '' || this.state.newFieldName.includes(
+        " ") || this.fieldsContainFieldAlready(this.state.newFieldName)) {
+      alert('Fix your new field name');
+      return;
+    }
+    this.handleChangeFields(this.state.newFieldName, "", this.state.newFieldType);
+  };
+
+  fieldsContainFieldAlready = (fieldName) => {
+    let fields = this.state.fields.slice();
+    for (let i = 0; i < fields.length; i++) {
+      if(fields[i].name === fieldName) {
+        return true;
+      }
+    }
+    return false;
+  };
+
+  removeField = (fieldName) => {
+    console.log("remvoe filed " + fieldName)
+    let fieldsCopy = this.state.fields.slice();
+    let filteredArray = fieldsCopy.filter(function(field) {
+      return field.name !== fieldName;
+    });
+    this.setState({
+      fields: filteredArray
+    })
   };
 
   render() {
@@ -176,6 +249,12 @@ export class AddEventController extends React.Component {
         isEdit={this.state.isEdit}
         feel={this.state.feel}
         feelRN={this.state.feelRN}
+        fields={this.state.fields}
+        handleChangeFields={this.handleChangeFields}
+        newFieldName={this.state.newFieldName}
+        newFieldType={this.state.newFieldType}
+        addField={this.addField}
+        removeField={this.removeField}
       />
     );
   }
