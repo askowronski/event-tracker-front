@@ -14,17 +14,89 @@ import TableFooter from '@material-ui/core/TableFooter';
 import './eventTable.css';
 import Modal from '@material-ui/core/Modal';
 import { AddEventContainerComponent } from '../addEvent/addEventContainerComponent';
+import TableSortLabel from '@material-ui/core/TableSortLabel';
+import EnhancedTableHead from '../../app/components/Table/EnhancedTableHead';
 
 function createData(name, calories, fat, carbs, protein) {
   return { name, calories, fat, carbs, protein };
 }
 
-const rows = [
-  createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
-  createData('Ice cream sandwich', 237, 9.0, 37, 4.3),
-  createData('Eclair', 262, 16.0, 24, 6.0),
-  createData('Cupcake', 305, 3.7, 67, 4.3),
-  createData('Gingerbread', 356, 16.0, 49, 3.9)
+function descendingComparator(a, b, orderBy) {
+  if (b[orderBy] < a[orderBy]) {
+    return -1;
+  }
+  if (b[orderBy] > a[orderBy]) {
+    return 1;
+  }
+  return 0;
+}
+
+function getComparator(order, orderBy) {
+  return order === 'desc'
+    ? (a, b) => descendingComparator(a, b, orderBy)
+    : (a, b) => -descendingComparator(a, b, orderBy);
+}
+
+function stableSort(array, comparator) {
+  const stabilizedThis = array.map((el, index) => [el, index]);
+  stabilizedThis.sort((a, b) => {
+    const order = comparator(a[0], b[0]);
+    if (order !== 0) return order;
+    return a[1] - b[1];
+  });
+  return stabilizedThis.map(el => el[0]);
+}
+
+const headCells = [
+  {
+    id: 'name',
+    numeric: false,
+    align: 'left',
+    disablePadding: true,
+    label: 'Event Name'
+  },
+  {
+    id: 'type',
+    numeric: false,
+    align: 'right',
+    disablePadding: false,
+    label: 'Type'
+  },
+  {
+    id: 'feel',
+    numeric: true,
+    align: 'right',
+    disablePadding: false,
+    label: 'Feel (-1<->1)'
+  },
+  {
+    id: 'startTime',
+    numeric: false,
+    align: 'right',
+    disablePadding: false,
+    label: 'Start Time'
+  },
+  {
+    id: 'endTime',
+    numeric: false,
+    align: 'right',
+    disablePadding: false,
+    label: 'End Time'
+  },
+  {
+    id: 'notes',
+    numeric: false,
+    align: 'left',
+    disablePadding: false,
+    label: 'Notes'
+  },
+  {
+    id: 'actions',
+    numeric: false,
+    align: 'left',
+    disablePadding: false,
+    label: 'Actions'
+  }
 ];
 
 export class EventTable extends React.Component {
@@ -40,7 +112,9 @@ export class EventTable extends React.Component {
       modalOpen: false,
       editEvent: {
         eventName: ''
-      }
+      },
+      order: 'asc',
+      orderBy: 'startTime'
     };
     this.closeModal = this.closeModal.bind(this);
   }
@@ -171,24 +245,32 @@ export class EventTable extends React.Component {
     );
   }
 
+  handleRequestSort = (event, property) => {
+    const isAsc = this.state.orderBy === property && this.state.order === 'asc';
+
+    this.setState({
+      order: isAsc ? 'desc' : 'asc',
+      orderBy: property
+    });
+  };
+
   render() {
     return (
       <div style={{ width: '100%' }}>
         <TableContainer component={Paper}>
           <Table aria-label="simple table" className="eventTable">
-            <TableHead>
-              <TableRow className="eventTableHeaderRow">
-                <TableCell>Event Name</TableCell>
-                <TableCell align="right">Type</TableCell>
-                <TableCell align="right">Feel</TableCell>
-                <TableCell align="right">Start Date/Time</TableCell>
-                <TableCell align="right">End Date/Time</TableCell>
-                <TableCell>Notes</TableCell>
-                <TableCell>Actions</TableCell>
-              </TableRow>
-            </TableHead>
+            <EnhancedTableHead
+              order={this.state.order}
+              orderBy={this.state.orderBy}
+              onRequestSort={this.handleRequestSort}
+              rowCount={this.state.events.length}
+              headCells={headCells}
+            />
             <TableBody>
-              {this.state.events
+              {stableSort(
+                this.state.events,
+                getComparator(this.state.order, this.state.orderBy)
+              )
                 .slice(
                   this.state.page * this.state.rowsPerPage,
                   this.state.page * this.state.rowsPerPage +

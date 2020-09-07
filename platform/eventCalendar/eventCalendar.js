@@ -10,7 +10,7 @@ const myEventsList = [];
 const eventColorLegend = {
   injury: '#b32400',
   run: 'green',
-  'rock-ring': 'brown',
+  'rock-ring': ' #663300',
   handstand: 'yellow',
   Test: 'orange',
   test: 'orange',
@@ -18,7 +18,6 @@ const eventColorLegend = {
   stretch: 'lightgreen',
   'physical-therapy': 'lightpink',
   'pt-exercises': '#336600'
-
 };
 
 export class EventCalendar extends React.Component {
