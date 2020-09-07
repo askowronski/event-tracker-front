@@ -1,6 +1,6 @@
 import React from 'react';
 import { AddEvent } from './addEvent';
-import {FieldsInputContainerComponent} from "../fieldsInput/fieldsInputContainerComponent";
+import { FieldsInputContainerComponent } from '../fieldsInput/fieldsInputContainerComponent';
 
 const myEventsList = [];
 
@@ -32,7 +32,7 @@ export class AddEventController extends React.Component {
       feelRN: 0,
       newFieldName: '',
       newFieldType: 'text',
-      fields: [],
+      fields: []
     };
   }
 
@@ -40,20 +40,27 @@ export class AddEventController extends React.Component {
     const { isEdit } = this.props;
     if (isEdit) {
       const { notes, type, startTime, endTime } = this.props.editEvent;
-      const {eventType} = this.props.editEvent;
-      const {fields} = eventType;
+      const { eventType } = this.props.editEvent;
+      const { fields } = eventType;
+      let fieldsCopy = [];
+      if (fields !== null) {
+        fieldsCopy = fields;
+      }
       const { isEdit, editId, eventName, userName, isOnGoing } = this.props;
       this.setState({
         eventName,
         userName,
         notes,
         type,
-        startTime,
-        endTime,
         isEdit,
         editId,
-        isOnGoing,
-        fields
+        isOnGoing
+      });
+
+      this.setState({
+        fields: fieldsCopy,
+        startTime: new Date(startTime),
+        endTime: new Date(endTime)
       });
     }
   }
@@ -165,7 +172,7 @@ export class AddEventController extends React.Component {
       feelRN: 0.0,
       fields: [],
       newFieldName: '',
-      newFieldType: 'text',
+      newFieldType: 'text'
     });
   };
 
@@ -177,11 +184,10 @@ export class AddEventController extends React.Component {
   };
 
   handleChangeFields = (fieldName, fieldValue, fieldType) => {
-
     let fields = this.state.fields.slice();
     let existingField = false;
     for (let i = 0; i < fields.length; i++) {
-      if(fields[i].name === fieldName) {
+      if (fields[i].name === fieldName) {
         fields[i].value = fieldValue;
         existingField = true;
         break;
@@ -198,37 +204,44 @@ export class AddEventController extends React.Component {
 
     this.setState({
       fields: fields
-    })
+    });
   };
 
   addField = () => {
-    if (this.state.newFieldName === '' || this.state.newFieldName.includes(
-        " ") || this.fieldsContainFieldAlready(this.state.newFieldName)) {
+    if (
+      this.state.newFieldName === '' ||
+      this.state.newFieldName.includes(' ') ||
+      this.fieldsContainFieldAlready(this.state.newFieldName)
+    ) {
       alert('Fix your new field name');
       return;
     }
-    this.handleChangeFields(this.state.newFieldName, "", this.state.newFieldType);
+    this.handleChangeFields(
+      this.state.newFieldName,
+      '',
+      this.state.newFieldType
+    );
   };
 
-  fieldsContainFieldAlready = (fieldName) => {
+  fieldsContainFieldAlready = fieldName => {
     let fields = this.state.fields.slice();
     for (let i = 0; i < fields.length; i++) {
-      if(fields[i].name === fieldName) {
+      if (fields[i].name === fieldName) {
         return true;
       }
     }
     return false;
   };
 
-  removeField = (fieldName) => {
-    console.log("remvoe filed " + fieldName)
+  removeField = fieldName => {
+    console.log('remvoe filed ' + fieldName);
     let fieldsCopy = this.state.fields.slice();
     let filteredArray = fieldsCopy.filter(function(field) {
       return field.name !== fieldName;
     });
     this.setState({
       fields: filteredArray
-    })
+    });
   };
 
   render() {
