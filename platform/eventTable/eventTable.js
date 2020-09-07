@@ -144,6 +144,10 @@ export class EventTable extends React.Component {
     });
   };
 
+  formatDate = date => {
+    return new Date(date).toLocaleString();
+  };
+
   setRowsPerPage = rows => {
     this.setState({
       rowsPerPage: rows
@@ -197,8 +201,12 @@ export class EventTable extends React.Component {
                     </TableCell>
                     <TableCell align="right">{event.eventType.type}</TableCell>
                     <TableCell align="right">{event.feel}</TableCell>
-                    <TableCell align="right">{event.startTime}</TableCell>
-                    <TableCell align="right">{event.endTime}</TableCell>
+                    <TableCell align="right">
+                      {this.formatDate(event.startTime)}
+                    </TableCell>
+                    <TableCell align="right">
+                      {this.formatDate(event.endTime)}
+                    </TableCell>
                     <TableCell>{this.renderNotes(event.notes)}</TableCell>
                     <TableCell>{this.renderActions(event)}</TableCell>
                   </TableRow>
