@@ -9,6 +9,13 @@ import DateTimePicker from 'react-datetime-picker';
 import Button from '@material-ui/core/Button';
 import Slider from '@material-ui/core/Slider';
 import Typography from '@material-ui/core/Typography';
+import IconButton from "@material-ui/core/IconButton";
+import AddIcon from '@material-ui/icons/Add';
+import DeleteIcon from '@material-ui/icons/Delete';
+import Grid from "@material-ui/core/Grid";
+import Select from "@material-ui/core/Select";
+import MenuItem from "@material-ui/core/MenuItem";
+import {FieldsInputContainerComponent} from "../fieldsInput/fieldsInputContainerComponent";
 
 const eventColorLegend = {
   injury: 'red',
@@ -23,6 +30,9 @@ const eventColorLegend = {
 export class AddEvent extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      isOpen: false
+    }
   }
 
   renderButton() {
@@ -41,6 +51,18 @@ export class AddEvent extends React.Component {
         Create Event
       </Button>
     );
+  }
+
+  renderFields() {
+    return this.props.fields.map((field, i) => {
+      return (
+            <FieldsInputContainerComponent
+            field={field}
+            handleChangeFields={this.props.handleChangeFields}
+            removeField={this.props.removeField}
+            />
+      )
+    })
   }
 
   render() {
@@ -71,6 +93,42 @@ export class AddEvent extends React.Component {
             value={this.props.type}
             onChange={e => this.props.handleChange('type', e.target.value)}
           />
+
+          <IconButton onClick={() => this.props.addField()}>
+            <AddIcon />
+            Add Fields
+          </IconButton>
+
+          <TextField
+              id="input-type"
+              label="Outlined"
+              type="text"
+              label="New Field Name"
+              value={this.props.newFieldName}
+              onChange={e => this.props.handleChange("newFieldName", e.target.value)}
+          />
+          <Select
+              labelId="new-field-type"
+              id="eventTypesSelect"
+              open={this.state.isOpen}
+              onClose={() => {this.setState({
+                isOpen: false
+              })}}
+              onOpen={() => {this.setState({
+                isOpen: true
+              })}}
+              value={this.props.newFieldType}
+              onChange={(e) => this.props.handleChange('newFieldType', e.target.value)}
+          >
+            <MenuItem value="text" selected>
+              Text
+            </MenuItem>
+            <MenuItem value="number" >Number</MenuItem>
+            <MenuItem value="json" >Json</MenuItem>
+          </Select>
+
+          {this.renderFields()}
+
           <TextField
             id="input-duration"
             label="Outlined"
